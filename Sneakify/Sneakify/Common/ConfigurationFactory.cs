@@ -59,5 +59,12 @@ namespace Sneakify.Common
             var configured = Configure(config, env);
             return configured.Build();
         }
+
+        public static string Get(string key)
+        {
+            var a = CreateConfiguration();
+            return a.GetValue<string>(key);
+
+        }
     }
 }

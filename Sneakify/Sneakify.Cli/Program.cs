@@ -1,4 +1,5 @@
 ﻿using ManyConsole;
+using Sneakify.Common;
 using System;
 
 namespace Sneakify.Cli
