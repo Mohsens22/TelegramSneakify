@@ -1,4 +1,5 @@
-﻿using Sneakify.Common;
+﻿using Olive;
+using Sneakify.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,12 +27,12 @@ namespace Sneakify.Telegram
                             UseChatInfoDatabase = true,
                             UseMessageDatabase = true,
                             UseSecretChats = true,
-                            ApiId = 123456, // your API ID
-                            ApiHash = "hash", // your API HASH
+                            ApiId = ConfigurationFactory.Get("telegram:appId").To<int>(), // your API ID
+                            ApiHash = ConfigurationFactory.Get("telegram:appHash"), // your API HASH
                             SystemLanguageCode = "en",
-                            DeviceModel = "Windows",
-                            SystemVersion = "0.1",
-                            ApplicationVersion = "0.1",
+                            DeviceModel = "Windows", //System.Runtime.InteropServices.RuntimeInformation.OSDescription,
+                            SystemVersion = "10.0",
+                            ApplicationVersion = Constants.Version,
                             EnableStorageOptimizer = true,
                             IgnoreFileNames = false
                         }
@@ -43,23 +44,29 @@ namespace Sneakify.Telegram
                     break;
 
                 case TdApi.AuthorizationState.AuthorizationStateWaitPhoneNumber _:
+                    Console.WriteLine("Enter phone number with country code:");
+                    var phone = Console.ReadLine();
                     await _dialer.ExecuteAsync(new TdApi.SetAuthenticationPhoneNumber
                     {
-                        PhoneNumber = "+01234567789" // your phone
+                        PhoneNumber = phone // your phone
                     });
                     break;
 
                 case TdApi.AuthorizationState.AuthorizationStateWaitCode _:
+                    Console.WriteLine("Enter auth code:");
+                    var authCode = Console.ReadLine();
                     await _dialer.ExecuteAsync(new TdApi.CheckAuthenticationCode
                     {
-                        Code = "123456", // your auth code
+                        Code = authCode, // your auth code
                     });
                     break;
 
                 case TdApi.AuthorizationState.AuthorizationStateWaitPassword _:
+                    Console.WriteLine("You used a secondary password bitch? Just jokin, please enter it.");
+                    var pass = Console.ReadLine();
                     await _dialer.ExecuteAsync(new TdApi.CheckAuthenticationPassword
                     {
-                        Password = "P@$$w0rd" // your password
+                        Password = pass // your password
                     });
                     break;
 

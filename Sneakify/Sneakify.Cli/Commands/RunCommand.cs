@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Sneakify.Handlers;
 
 namespace Sneakify.Cli.Commands
 {
@@ -13,7 +14,9 @@ namespace Sneakify.Cli.Commands
         }
         public override int Run(string[] remainingArguments)
         {
-            throw new NotImplementedException();
+            BotRunner.Run();
+
+            return 1;
         }
     }
 }
