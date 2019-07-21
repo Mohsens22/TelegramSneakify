@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sneakify", "Sneakify\Sneakify.csproj", "{31B5A7A8-5359-4D37-8EA4-1145FAA13EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sneakify", "Sneakify\Sneakify.csproj", "{31B5A7A8-5359-4D37-8EA4-1145FAA13EC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sneakify.Cli", "Sneakify.Cli\Sneakify.Cli.csproj", "{77738FB7-8A21-4660-A2B5-15C67655C3B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sneakify.Cli", "Sneakify.Cli\Sneakify.Cli.csproj", "{77738FB7-8A21-4660-A2B5-15C67655C3B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tel.Egram.Services", "Tel.Egram.Services\Tel.Egram.Services.csproj", "{3BC4A864-BA60-410A-B006-A55A5E9D6C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{77738FB7-8A21-4660-A2B5-15C67655C3B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77738FB7-8A21-4660-A2B5-15C67655C3B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77738FB7-8A21-4660-A2B5-15C67655C3B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC4A864-BA60-410A-B006-A55A5E9D6C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC4A864-BA60-410A-B006-A55A5E9D6C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC4A864-BA60-410A-B006-A55A5E9D6C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC4A864-BA60-410A-B006-A55A5E9D6C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

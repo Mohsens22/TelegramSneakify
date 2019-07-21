@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Sneakify.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TdLib;
+using Tel.Egram.Services.Authentication;
+using Tel.Egram.Services.Persistance;
 
 namespace Sneakify.Telegram
 {
@@ -10,31 +13,16 @@ namespace Sneakify.Telegram
     {
         public void Run()
         {
-            RegisterEvent();
+            var strage = new Storage(Extentions.GetExecutionPath().FullName);
+            var athenticator = new Authenticator(;
+
 
         }
 
         private void RegisterEvent()
         {
-            _hub.Received += async (sender, data) =>
-            {
-                Auth.CheckAuth(_dialer, data);
-                if(data is TdApi.Message)
-                {
-
-                }
-                if (data is TdApi.Ok)
-                {
-                    // do something
-                    
-                }
-                else if (data is TdApi.Error)
-                {
-                    // handle error
-                }
-
-            };
-            _hub.Start();
+            
+            
         }
     }
 }
