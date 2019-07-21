@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Olive;
+using Sneakify.Common;
+using System;
 using System.Reactive.Linq;
+using System.Text;
 using TdLib;
 using Tel.Egram.Services.Persistance;
 using Tel.Egram.Services.Utils.TdLib;
@@ -28,6 +31,9 @@ namespace Tel.Egram.Services.Authentication
         
         public IObservable<TdApi.Ok> SetupParameters()
         {
+            var id = ConfigurationFactory.Get("telegram:appId").To<int>();
+            var hash = ConfigurationFactory.Get("telegram:appHash");
+
             return _agent.Execute(new TdApi.SetTdlibParameters
             {
                 Parameters = new TdApi.TdlibParameters
@@ -39,9 +45,8 @@ namespace Tel.Egram.Services.Authentication
                     UseChatInfoDatabase = true,
                     UseMessageDatabase = true,
                     UseSecretChats = true,
-                    ApiId = 111112,
-                    ApiHash = new Guid(new byte[]
-                        {142, 34, 97, 121, 94, 51, 206, 139, 4, 159, 245, 26, 236, 242, 11, 171}).ToString("N"),
+                    ApiId = id,
+                    ApiHash = hash,
                     SystemLanguageCode = "en",
                     DeviceModel = "Mac",
                     SystemVersion = "0.1",
@@ -54,7 +59,8 @@ namespace Tel.Egram.Services.Authentication
 
         public IObservable<TdApi.Ok> CheckEncryptionKey()
         {
-            return _agent.Execute(new TdApi.CheckDatabaseEncryptionKey());
+            var encryptKey = Encoding.ASCII.GetBytes(ConfigurationFactory.Get("telegram:encryptKey"));
+            return _agent.Execute(new TdApi.CheckDatabaseEncryptionKey {EncryptionKey= encryptKey });
         }
 
         public IObservable<TdApi.Ok> SetPhoneNumber(string phoneNumber)

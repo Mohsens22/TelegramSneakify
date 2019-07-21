@@ -23,5 +23,9 @@
   <ItemGroup>
     <Folder Include="Messaging" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Sneakify.Common\Sneakify.Common.csproj" />
+  </ItemGroup>
 
 </Project>

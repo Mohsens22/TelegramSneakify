@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TdLib;
 using Tel.Egram.Services.Authentication;
 using Tel.Egram.Services.Persistance;
+using Tel.Egram.Services.Utils.TdLib;
 
 namespace Sneakify.Telegram
 {
@@ -13,16 +14,12 @@ namespace Sneakify.Telegram
     {
         public void Run()
         {
-            var strage = new Storage(Extentions.GetExecutionPath().FullName);
-            var athenticator = new Authenticator(;
+           
+
 
 
         }
 
-        private void RegisterEvent()
-        {
-            
-            
-        }
+        
     }
 }
