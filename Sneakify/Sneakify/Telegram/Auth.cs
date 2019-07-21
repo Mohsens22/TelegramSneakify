@@ -15,9 +15,8 @@ namespace Sneakify.Telegram
 
         public void Run()
         {
-            var strage = new Storage(Extentions.GetExecutionPath().FullName);
-            var agent = new Agent(_hub, _dialer);
-            var athenticator = new Authenticator(agent, strage);
+            
+            var athenticator = new Authenticator(_agent, _storage);
             athenticator.SetupParameters();
             athenticator.CheckEncryptionKey();
 
