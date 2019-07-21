@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManyConsole;
+using System;
 
 namespace Sneakify.Cli
 {
@@ -15,7 +16,9 @@ namespace Sneakify.Cli
 
         private static int RegisterCommands(string[] args)
         {
-            throw new NotImplementedException();
+            var commands = ConsoleCommandDispatcher.FindCommandsInSameAssemblyAs(typeof(Program));
+            return ConsoleCommandDispatcher.DispatchCommand(commands, args, Console.Out);
+
         }
 
         private static void WaitForExit()
