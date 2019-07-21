@@ -16,6 +16,7 @@ namespace Sneakify.Telegram
             _hub = new Hub(_client);
             _dialer = new Dialer(_client, _hub);
 
+            TdLib.Client.Log.SetVerbosityLevel(1);
 
         }
     }

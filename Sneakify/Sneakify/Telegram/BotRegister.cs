@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TdLib;
 
 namespace Sneakify.Telegram
@@ -9,25 +10,31 @@ namespace Sneakify.Telegram
     {
         public void Run()
         {
-            //_hub.Received += async (sender, data) =>
-            //{
-            //    Auth.CheckAuth(_dialer, data);
+            RegisterEvent();
 
-            //    Console.WriteLine("Fuck");
+        }
 
-            //};
-            //_hub.Start();
-            _dialer.Execute(new TdApi.AddProxy
+        private void RegisterEvent()
+        {
+            _hub.Received += async (sender, data) =>
             {
-                Type = new TdApi.ProxyType.ProxyTypeMtproto() { Secret = "dd5b23c518418daef5b54f0bc86dcefc1a" },
-                Server = "34.245.97.49",
-                Port = 23816
+                Auth.CheckAuth(_dialer, data);
+                if(data is TdApi.Message)
+                {
 
-            });
-            _dialer.SetClient();
-            _dialer.AddPhone();
-            _dialer.AddCode();
-            _dialer.AddPassword();
+                }
+                if (data is TdApi.Ok)
+                {
+                    // do something
+                    
+                }
+                else if (data is TdApi.Error)
+                {
+                    // handle error
+                }
+
+            };
+            _hub.Start();
         }
     }
 }

@@ -37,25 +37,28 @@ namespace Sneakify.Telegram
                 case TdApi.AuthorizationState.AuthorizationStateReady _:
                     // now authenticated. do something here
                     break;
-                default:
-                    break;
             }
         }
         public static async void SetClient(this Dialer dialer)
         {
+            var dir = Extentions.GetExecutionPath().FullName;
+            var id = ConfigurationFactory.Get("telegram:appId").To<int>();
+            var hash = ConfigurationFactory.Get("telegram:appHash");
+            var encryptKey = Encoding.ASCII.GetBytes(ConfigurationFactory.Get("telegram:encryptKey"));
+
             await dialer.ExecuteAsync(new TdApi.SetTdlibParameters
             {
                 Parameters = new TdApi.TdlibParameters
                 {
                     UseTestDc = false,
-                    DatabaseDirectory = Extentions.GetExecutionPath().FullName, // directory here
-                    FilesDirectory = Extentions.GetExecutionPath().FullName, // directory here
+                    DatabaseDirectory = dir, // directory here
+                    FilesDirectory = dir, // directory here
                     UseFileDatabase = true,
                     UseChatInfoDatabase = true,
                     UseMessageDatabase = true,
                     UseSecretChats = true,
-                    ApiId = ConfigurationFactory.Get("telegram:appId").To<int>(), // your API ID
-                    ApiHash = ConfigurationFactory.Get("telegram:appHash"), // your API HASH
+                    ApiId = id, // your API ID
+                    ApiHash = hash, // your API HASH
                     SystemLanguageCode = "en",
                     DeviceModel = "Windows", //System.Runtime.InteropServices.RuntimeInformation.OSDescription,
                     SystemVersion = "10.0",
@@ -65,6 +68,9 @@ namespace Sneakify.Telegram
 
                 }
             });
+
+            await dialer.ExecuteAsync(new TdApi.CheckDatabaseEncryptionKey() { EncryptionKey = encryptKey });
+            
         }
 
         public async static void AddPassword(this Dialer dialer)
