@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TdLib;
 using Tel.Egram.Services.Authentication;
+using Tel.Egram.Services.Messaging.Messages;
 using Tel.Egram.Services.Messaging.Notifications;
 using Tel.Egram.Services.Persistance;
 using Tel.Egram.Services.Utils.Reactive;
 using Tel.Egram.Services.Utils.TdLib;
+using Sneakify.Mitsuku;
+using System.Threading;
 
 namespace Sneakify.Telegram
 {
@@ -21,8 +24,9 @@ namespace Sneakify.Telegram
             authent.SetupParameters();
             var state = authent.ObserveState();
             authent.CheckEncryptionKey();
+            var sender = new MessageSender(_agent);
 
-            
+
 
             var notify = new NotificationSource(_agent);
             var notif = notify.MessagesNotifications();
@@ -30,7 +34,12 @@ namespace Sneakify.Telegram
             notif.Accept(notifications =>
             {
                 var mg = notifications.Message.Content as TdApi.MessageContent.MessageText;
-                Console.WriteLine(mg.Text.Text);
+
+                var rxt = Taker.Talk(mg.Text.Text);
+                Thread.Sleep(5000);
+                var returnMsg = new TdApi.InputMessageContent.InputMessageText { Text = new TdApi.FormattedText { Text = rxt } };
+                sender.SendMessage(notifications.Chat, returnMsg);
+                
             });
 
 
