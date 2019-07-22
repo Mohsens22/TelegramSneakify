@@ -41,15 +41,28 @@ namespace Sneakify.Telegram
                     {
                         var r = await _dialer.ExecuteAsync(new TdApi.OpenChat { ChatId = notifications.Message.ChatId });
 
+                        var chats = await _dialer.ExecuteAsync(new TdApi.GetChatHistory
+                        {
+                            ChatId = notifications.Message.ChatId,
+                            Limit = 10,
+                            Offset = 0,
+                            OnlyLocal = false
+                        });
+
                         var result = await _dialer.ExecuteAsync(new TdApi.ViewMessages { ChatId = notifications.Message.ChatId, MessageIds = new[] { notifications.Message.Id } });
 
                         var rxt = Taker.Talk(mg.Text.Text);
 
                         var rz = rxt;
 
-                        for (int i = 0; i < 33; i++)
+                        for (int i = 0; i < 1; i++)
                         {
                             rz += i;
+
+                            var rrr = await _dialer.ExecuteAsync(
+                                new TdApi.SendChatAction { ChatId= notifications.Message.ChatId,Action=new TdApi.ChatAction.ChatActionTyping() }
+                                );
+
                            var res = await _dialer.ExecuteAsync(
                                 new TdApi.SetChatDraftMessage
                                 { ChatId= notifications.Message.ChatId 
@@ -60,7 +73,7 @@ namespace Sneakify.Telegram
                                 }
                                 }
                                 });
-                            Thread.Sleep(150);
+                            Thread.Sleep(5000);
                         }
                         var returnMsg = new TdApi.InputMessageContent.InputMessageText { Text = new TdApi.FormattedText { Text = rxt },ClearDraft=true};
                         sender.SendMessage(notifications.Chat, returnMsg);
