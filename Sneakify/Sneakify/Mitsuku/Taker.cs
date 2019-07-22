@@ -31,7 +31,7 @@ namespace Sneakify.Mitsuku
 
             using (var client = new HttpClient())
             {
-                var requestUri = new Uri($"https://miapi.pandorabots.com/talk?botkey=n0M6dW2XZacnOgCWTp0FRYUuMjSfCkJGgobNpgPv9060_72eKnu3Yl-o1v2nFGtSXqfwJBG2Ros~&input={input.UrlEncode()}&client_name=cw16c16d11b31&sessionid={session}&channel=6");
+                var requestUri = new Uri($"https://miapi.pandorabots.com/talk?botkey=n0M6dW2XZacnOgCWTp0FRYUuMjSfCkJGgobNpgPv9060_72eKnu3Yl-o1v2nFGtSXqfwJBG2Ros~&input={input.UrlEncode()}&sessionid={session}&channel=6");
                 
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Add("Origin", "https://www.pandorabots.com");

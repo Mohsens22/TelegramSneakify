@@ -12,6 +12,7 @@ using Tel.Egram.Services.Utils.Reactive;
 using Tel.Egram.Services.Utils.TdLib;
 using Sneakify.Mitsuku;
 using System.Threading;
+using Olive;
 
 namespace Sneakify.Telegram
 {
@@ -31,14 +32,49 @@ namespace Sneakify.Telegram
             var notify = new NotificationSource(_agent);
             var notif = notify.MessagesNotifications();
 
-            notif.Accept(notifications =>
+            notif.Accept(async notifications =>
             {
-                var mg = notifications.Message.Content as TdApi.MessageContent.MessageText;
+                try
+                {
+                    var mg = notifications.Message.Content as TdApi.MessageContent.MessageText;
+                    if (mg.Text.Text.HasValue())
+                    {
+                        var r = await _dialer.ExecuteAsync(new TdApi.OpenChat { ChatId = notifications.Message.ChatId });
 
-                var rxt = Taker.Talk(mg.Text.Text);
-                Thread.Sleep(5000);
-                var returnMsg = new TdApi.InputMessageContent.InputMessageText { Text = new TdApi.FormattedText { Text = rxt } };
-                sender.SendMessage(notifications.Chat, returnMsg);
+                        var result = await _dialer.ExecuteAsync(new TdApi.ViewMessages { ChatId = notifications.Message.ChatId, MessageIds = new[] { notifications.Message.Id } });
+
+                        var rxt = Taker.Talk(mg.Text.Text);
+
+                        var rz = rxt;
+
+                        for (int i = 0; i < 33; i++)
+                        {
+                            rz += i;
+                           var res = await _dialer.ExecuteAsync(
+                                new TdApi.SetChatDraftMessage
+                                { ChatId= notifications.Message.ChatId 
+                                ,DraftMessage = new TdApi.DraftMessage
+                                { InputMessageText=new TdApi.InputMessageContent.InputMessageText
+                                {
+                                    Text = new TdApi.FormattedText { Text =rz}
+                                }
+                                }
+                                });
+                            Thread.Sleep(150);
+                        }
+                        var returnMsg = new TdApi.InputMessageContent.InputMessageText { Text = new TdApi.FormattedText { Text = rxt },ClearDraft=true};
+                        sender.SendMessage(notifications.Chat, returnMsg);
+
+                        var r1 = await _dialer.ExecuteAsync(new TdApi.CloseChat { ChatId = notifications.Message.ChatId });
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+                }
+                
                 
             });
 

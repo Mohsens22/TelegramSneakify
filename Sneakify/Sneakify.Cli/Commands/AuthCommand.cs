@@ -8,6 +8,10 @@ namespace Sneakify.Cli.Commands
 {
     class AuthCommand : ConsoleCommand
     {
+        public AuthCommand()
+        {
+            IsCommand("Auth", "Authenticate telegram");
+        }
         public override int Run(string[] remainingArguments)
         {
             AuthHandler.Run();

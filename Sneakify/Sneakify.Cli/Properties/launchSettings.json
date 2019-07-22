@@ -2,6 +2,7 @@
   "profiles": {
     "Sneakify.Cli": {
       "commandName": "Project",
+      "commandLineArgs": "Run",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
